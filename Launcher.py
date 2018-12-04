@@ -2,6 +2,8 @@ import subprocess
 import tempfile
 import os
 import time
+import requests
+from AutoChrome import AutoChrome
 
 
 DEFAULT_ARGS = ('--disable-translate', '--disable-extensions', '--disable-background-networking',
@@ -13,7 +15,7 @@ DEFAULT_ARGS = ('--disable-translate', '--disable-extensions', '--disable-backgr
                 '--disable-ipc-flooding-protection', '--disable-prompt-on-repost',
                 '--disable-renderer-backgrounding',
                 '--password-store=basic', '--use-mock-keychain', '--disable-infobars', '--process-per-tab',
-                'about:blank')
+                'about:blank', '--remote-debugging-address=127.0.0.1')
 
 
 class Launcher:
@@ -38,11 +40,19 @@ class Launcher:
         if self.headless:
             pass
         args = args + list(DEFAULT_ARGS)
-        return subprocess.Popen(args=args)
+        p = subprocess.Popen(args=args)
+        return AutoChrome(chrome_process=p)
 
 
 if __name__ == '__main__':
     launcher = Launcher(path='/Users/wangchao/.cdp4j/chromium-605198/Chromium.app/Contents/MacOS/Chromium')
-    p = launcher.launch()
+    auto_chrome = launcher.launch()
+    while True:
+        try:
+            time.sleep(0.5)
+            requests.get('http://127.0.0.1:9222/json')
+            break
+        except IOError:
+            pass
     time.sleep(8)
-    p.terminate()
+    auto_chrome.close()
