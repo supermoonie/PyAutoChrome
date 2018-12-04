@@ -1,6 +1,12 @@
 # PyAutoChrome
 AutoChrome for Python
 
+- Launcher
+    - process launch(path, port, user_data_dir, open_dev_tools, incognito)
+
+- Condition
+    bool apply(auto_chrome)
+
 - AutoChrome
     - bool wait(condition, timeout)
     - bool wait([condition_1, condition_2], timeout)
