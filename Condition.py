@@ -1,7 +1,5 @@
 from abc import abstractmethod
 
-from AutoChrome import AutoChrome
-
 
 class Condition(object):
     @abstractmethod
