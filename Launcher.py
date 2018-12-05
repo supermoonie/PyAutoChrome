@@ -41,7 +41,8 @@ class Launcher:
             pass
         args = args + list(DEFAULT_ARGS)
         p = subprocess.Popen(args=args)
-        return AutoChrome(chrome_process=p)
+        return AutoChrome(port=self.port, chrome_process=p)
+
 
 
 if __name__ == '__main__':
