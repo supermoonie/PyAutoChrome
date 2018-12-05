@@ -94,6 +94,7 @@ class ChromeInterface(object):
                 break
             try:
                 message = self.ws.recv()
+                print('<<< result: ' + message)
                 parsed_message = json.loads(message)
                 messages.append(parsed_message)
                 if 'method' in parsed_message and parsed_message['method'] == event:

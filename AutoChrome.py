@@ -1,6 +1,7 @@
 import time
 
 import Conditions
+from Event import Event
 import Launcher
 import PyChromeDevTools
 
@@ -22,9 +23,15 @@ class AutoChrome(object):
         for index, tab in enumerate(self.chrome.tabs):
             if 'page' == tab['type'] and 'about:blank' == tab['url']:
                 self.chrome.connect(tab=index, update_tabs=False)
+                self.chrome.Page.enable()
+                self.chrome.Network.enable()
+                self.chrome.Page.setLifecycleEventsEnabled(enabled=True)
                 return
 
-    def wait_for(self, conditions, timeout):
+    def wait_condition(self, condition, timeout):
+        return self.wait_conditions(conditions=[condition], timeout=timeout)
+
+    def wait_conditions(self, conditions, timeout):
         if conditions is None:
             raise ValueError('conditions is None!')
         if type(conditions) is not list:
@@ -45,6 +52,17 @@ class AutoChrome(object):
             if time.time() - start >= timeout:
                 raise TimeoutError
 
+    def wait_event(self, event, timeout):
+        if event is None:
+            raise ValueError('event is None!')
+        if type(event) is not Event:
+            raise ValueError('event is not a event!')
+        if timeout is None:
+            raise ValueError('timeout is None!')
+        if timeout < MIN_TIMEOUT:
+            raise ValueError('timeout less than ' + str(MIN_TIMEOUT) + ' s')
+        return self.chrome.wait_event(str(event), timeout)
+
     def close(self):
         if self.chrome_process is not None:
             self.chrome_process.terminate()
@@ -53,5 +71,6 @@ class AutoChrome(object):
 if __name__ == '__main__':
     launcher = Launcher.Launcher(path='C:/app/chrome-win/chrome.exe')
     auto_chrome = launcher.launch()
-    auto_chrome.chrome.Page.navigate(url='http://httpbin.org/get')
-    auto_chrome.wait_for(conditions=[Conditions.wait_dom_ready], timeout=8)
+    auto_chrome.chrome.Page.navigate(url='https://persons.shgjj.com')
+    # auto_chrome.wait_condition(condition=Conditions.wait_dom_ready, timeout=18)
+    auto_chrome.wait_event(event=Event.PageFrameStoppedLoading, timeout=10)
