@@ -44,7 +44,6 @@ class Launcher:
         return AutoChrome(port=self.port, chrome_process=p)
 
 
-
 if __name__ == '__main__':
     launcher = Launcher(path='/Users/wangchao/.cdp4j/chromium-605198/Chromium.app/Contents/MacOS/Chromium')
     auto_chrome = launcher.launch()

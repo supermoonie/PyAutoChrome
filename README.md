@@ -2,15 +2,13 @@
 AutoChrome for Python
 
 - Launcher
-    - process launch(path, port, user_data_dir, open_dev_tools, incognito)
-
-- Condition
-    - bool apply(auto_chrome)
+    - AutoChrome launch()
 
 - AutoChrome
-    - bool wait(condition, timeout)
-    - bool wait([condition_1, condition_2], timeout)
-    - object do_it_until(fun, event, timeout)
+    - bool wait_condition(condition, timeout)
+    - bool wait_conditions([condition_1, condition_2], timeout)
+    - {} wait_event(event, timeout)
+    - {} wait_lifecycle_event(event, timeout)
     - close
 
 - AutoDom

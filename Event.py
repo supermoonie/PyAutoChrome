@@ -2,7 +2,17 @@ from enum import Enum, unique
 
 
 @unique
-class Event(Enum):
+class LifecycleEvents(Enum):
+    FirstMeaningfulPaint = 'firstMeaningfulPaint',
+    NetworkAlmostIdle = 'networkAlmostIdle',
+    NetworkIdle = 'networkIdle'
+
+    def __str__(self):
+        return '%s' % self._value_
+
+
+@unique
+class Events(Enum):
     TargetTargetCreated = 'Target.targetCreated',
     DatabaseAddDatabase = 'Database.addDatabase',
     NetworkRequestWillBeSent = 'Network.requestWillBeSent',
@@ -20,4 +30,6 @@ class Event(Enum):
 
 
 if __name__ == '__main__':
-    print(str(Event.TargetTargetCreated))
+    print(str(Events.TargetTargetCreated))
+    print(str(LifecycleEvents.FirstMeaningfulPaint))
+    print(type(LifecycleEvents.FirstMeaningfulPaint))
