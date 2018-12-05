@@ -3,9 +3,9 @@ from enum import Enum, unique
 
 @unique
 class LifecycleEvents(Enum):
-    FirstMeaningfulPaint = 'firstMeaningfulPaint',
-    NetworkAlmostIdle = 'networkAlmostIdle',
-    NetworkIdle = 'networkIdle'
+    firstMeaningfulPaint = 'firstMeaningfulPaint',
+    networkAlmostIdle = 'networkAlmostIdle',
+    networkIdle = 'networkIdle'
 
     def __str__(self):
         return '%s' % self._value_
@@ -31,5 +31,5 @@ class Events(Enum):
 
 if __name__ == '__main__':
     print(str(Events.TargetTargetCreated))
-    print(str(LifecycleEvents.FirstMeaningfulPaint))
-    print(type(LifecycleEvents.FirstMeaningfulPaint))
+    print(str(LifecycleEvents.firstMeaningfulPaint))
+    print(type(LifecycleEvents.firstMeaningfulPaint))

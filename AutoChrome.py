@@ -103,4 +103,4 @@ if __name__ == '__main__':
     auto_chrome.chrome.Page.navigate(url='https://persons.shgjj.com')
     # auto_chrome.wait_condition(condition=Conditions.wait_dom_ready, timeout=18)
     # result = auto_chrome.wait_event(event=Event.Events.PageFrameStoppedLoading, timeout=10)
-    auto_chrome.wait_lifecycle_event(event=Event.LifecycleEvents.FirstMeaningfulPaint, timeout=15)
+    auto_chrome.wait_lifecycle_event(event=Event.LifecycleEvents.firstMeaningfulPaint, timeout=15)

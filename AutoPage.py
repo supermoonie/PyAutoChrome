@@ -1,24 +1,46 @@
 import platform
 from abc import ABC, abstractmethod
+from enum import Enum, unique
 
 import Conditions
 import Launcher
 
-MIN_TIMEOUT = 0.15
+
+@unique
+class TransitionType(Enum):
+    link = 'link',
+    typed = 'typed',
+    address_bar = 'address_bar',
+    auto_bookmark = 'auto_bookmark',
+    auto_subframe = 'auto_subframe',
+    manual_subframe = 'manual_subframe',
+    generated = 'generated',
+    auto_toplevel = 'auto_toplevel',
+    form_submit = 'form_submit',
+    reload = 'reload',
+    keyword = 'keyword',
+    keyword_generated = 'keyword_generated',
+    other = 'other'
+
+    def __str__(self):
+        return '%s' % self._value_
 
 
 class AutoPage(ABC):
 
     def navigate_until_dom_ready(self, url, timeout):
+        navigate_result = self.navigate(url=url)
+        self.get_this().wait_condition(condition=Conditions.wait_dom_ready, timeout=timeout)
+        return navigate_result
+
+    def navigate(self, url):
         if url is None or url.strip() == '':
             raise ValueError('url is empty')
-        if timeout is None:
-            raise ValueError('timeout is None!')
-        if timeout < MIN_TIMEOUT:
-            raise ValueError('timeout less than ' + str(MIN_TIMEOUT) + ' s')
         that = self.get_this()
-        that.chrome.Page.navigate(url=url)
-        return that.wait_condition(condition=Conditions.wait_dom_ready, timeout=timeout)
+        return that.chrome.Page.navigate(url=url)
+
+    def navigate(self, url, referrer, transition_type, frame_id):
+        pass
 
     @abstractmethod
     def get_this(self):
@@ -31,4 +53,5 @@ if __name__ == '__main__':
     else:
         launcher = Launcher.Launcher(path='C:/app/chrome-win/chrome.exe')
     auto_chrome = launcher.launch()
-    auto_chrome.navigate_until_dom_ready(url='https://persons.shgjj.com', timeout=5)
+    result = auto_chrome.navigate_until_dom_ready(url='https://persons.shgjj.com', timeout=5)
+    print(result)

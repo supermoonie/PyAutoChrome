@@ -36,7 +36,7 @@ AutoChrome for Python
     - send_key_code(code)
 
 - AutoNavigate
-    - {} navigate_until_dom_ready(url, timeout)
+    - [x] {} navigate_until_dom_ready(url, timeout)
     - {} navigate_until_dialog_open(url, timeout)
     - {} navigate_until_first_meaning_full_paint(url, timeout)
     - {} navigate_until_lifecycle_event(url, lifecycle_event, timeout)
@@ -68,7 +68,7 @@ AutoChrome for Python
     - str capture_snapshot()
     - str get_content(url)
     - handle_java_script_dialog(accept, prompt_text)
-    - {} navigate(url)
+    - [x]  {} navigate(url)
     - {} navigate(url, referrer, transition_type, frame_id)
     - back()
     - forward()

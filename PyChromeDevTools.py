@@ -21,6 +21,7 @@ class GenericElement(object):
             self.parent.pop_messages()
             self.parent.message_counter += 1
             message_id = self.parent.message_counter
+            # TODO args中值为None 时的判断
             call_obj = {'id': message_id, 'method': func_name, 'params': args}
             data = json.dumps(call_obj)
             print('>>> ' + data)
