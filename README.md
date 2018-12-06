@@ -5,11 +5,11 @@ AutoChrome for Python
     - AutoChrome launch()
 
 - AutoChrome
-    - bool wait_condition(condition, timeout)
-    - bool wait_conditions([condition_1, condition_2], timeout)
-    - {} wait_event(event, timeout)
-    - {} wait_lifecycle_event(event, timeout)
-    - close
+    - [x] bool wait_condition(condition, timeout)
+    - [x] bool wait_conditions([condition_1, condition_2], timeout)
+    - [x] {} wait_event(event, timeout)
+    - [x] {} wait_lifecycle_event(event, timeout)
+    - [x] close
 
 - AutoDom
     - int get_document_id
@@ -69,7 +69,7 @@ AutoChrome for Python
     - str get_content(url)
     - handle_java_script_dialog(accept, prompt_text)
     - [x] {frameId, loaderId, errorText} navigate(url, referrer, transition_type, frame_id)
-    - back()
+    - [x] back()
     - forward()
     - reload(ignore_cache, script_to_evaluate_on_load)
     - stop_loading()

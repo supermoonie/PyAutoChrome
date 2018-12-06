@@ -42,7 +42,12 @@ class AutoPage(ABC):
     def back(self):
         that = self.get_this()
         navigation_history = that.chrome.Page.getNavigationHistory()
-        index = navigation_history['result']['currentIndex'] - 1
+        index = navigation_history['currentIndex'] - 1
+        if index < 0 or index >= len(navigation_history['entries']):
+            return
+        entry = navigation_history['entries'][index]
+        if entry is not None:
+            that.chrome.Page.navigateToHistoryEntry(entryId=entry['id'])
 
     def add_script_to_evaluate_on_new_document(self, source):
         if source is None or source.strip() == '':
@@ -61,9 +66,10 @@ if __name__ == '__main__':
     else:
         launcher = Launcher.Launcher(path='C:/app/chrome-win/chrome.exe')
     auto_chrome = launcher.launch()
-    script_identifier = auto_chrome.add_script_to_evaluate_on_new_document('alert(1)')
-    print(script_identifier)
+    # script_identifier = auto_chrome.add_script_to_evaluate_on_new_document('alert(1)')
+    # print(script_identifier)
     result = auto_chrome.navigate_until_dom_ready(url='https://www.baidu.com', timeout=5)
     print(result)
-    navigation_history = auto_chrome.chrome.Page.getNavigationHistory()
-    print(navigation_history)
+    # history = auto_chrome.chrome.Page.getNavigationHistory()
+    # print(history)
+    auto_chrome.back()
