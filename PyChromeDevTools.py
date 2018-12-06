@@ -31,9 +31,13 @@ class GenericElement(object):
             print('>>> ' + data)
             self.parent.ws.send(data)
             result, _ = self.parent.wait_result(message_id)
-            if result is not None and 'error' in result:
-                raise AutoChromeException(result['error']['data'])
-            return result
+            if result is not None:
+                if 'error' in result:
+                    raise AutoChromeException(result['error']['data'])
+                else:
+                    return result['result']
+            else:
+                return None
 
         return generic_function
 
@@ -105,7 +109,7 @@ class ChromeInterface(object):
                 parsed_message = json.loads(message)
                 messages.append(parsed_message)
                 if 'method' in parsed_message and parsed_message['method'] == event:
-                    matching_message = parsed_message
+                    matching_message = parsed_message['params']
                     break
             except:
                 break

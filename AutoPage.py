@@ -39,6 +39,11 @@ class AutoPage(ABC):
         that = self.get_this()
         return that.chrome.Page.navigate(url=url, referrer=referrer, transitionType=transition_type, frameId=frame_id)
 
+    def back(self):
+        that = self.get_this()
+        navigation_history = that.chrome.Page.getNavigationHistory()
+        index = navigation_history['result']['currentIndex'] - 1
+
     def add_script_to_evaluate_on_new_document(self, source):
         if source is None or source.strip() == '':
             raise ValueError('source is empty!')
@@ -60,3 +65,5 @@ if __name__ == '__main__':
     print(script_identifier)
     result = auto_chrome.navigate_until_dom_ready(url='https://www.baidu.com', timeout=5)
     print(result)
+    navigation_history = auto_chrome.chrome.Page.getNavigationHistory()
+    print(navigation_history)

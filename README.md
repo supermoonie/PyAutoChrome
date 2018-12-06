@@ -61,14 +61,14 @@ AutoChrome for Python
     - set_ignore_certificate_errors(ignore)
 
 - AutoPage
-    - add_script_to_evaluate_on_new_document(java_script)
+    - [x] identifier add_script_to_evaluate_on_new_document(java_script)
     - str capture_screen_shot(viewport)
     - str capture_screen_shot()
     - str capture_full_screen_shot()
     - str capture_snapshot()
     - str get_content(url)
     - handle_java_script_dialog(accept, prompt_text)
-    - [x] {} navigate(url, referrer, transition_type, frame_id)
+    - [x] {frameId, loaderId, errorText} navigate(url, referrer, transition_type, frame_id)
     - back()
     - forward()
     - reload(ignore_cache, script_to_evaluate_on_load)
