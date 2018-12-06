@@ -5,6 +5,7 @@ import time
 
 import requests
 import websocket
+from Exceptions import AutoChromeException
 
 TIMEOUT = 1
 
@@ -21,12 +22,17 @@ class GenericElement(object):
             self.parent.pop_messages()
             self.parent.message_counter += 1
             message_id = self.parent.message_counter
-            # TODO args中值为None 时的判断
-            call_obj = {'id': message_id, 'method': func_name, 'params': args}
+            params = {}
+            for key in args:
+                if args[key] is not None:
+                    params[key] = args[key]
+            call_obj = {'id': message_id, 'method': func_name, 'params': params}
             data = json.dumps(call_obj)
             print('>>> ' + data)
             self.parent.ws.send(data)
             result, _ = self.parent.wait_result(message_id)
+            if result is not None and 'error' in result:
+                raise AutoChromeException(result['error']['data'])
             return result
 
         return generic_function
@@ -120,7 +126,7 @@ class ChromeInterface(object):
                 print('<<< ' + message)
                 parsed_message = json.loads(message)
                 messages.append(parsed_message)
-                if 'result' in parsed_message and parsed_message['id'] == result_id:
+                if ('result' in parsed_message or 'error' in parsed_message) and parsed_message['id'] == result_id:
                     matching_result = parsed_message
                     break
             except:

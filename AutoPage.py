@@ -33,14 +33,17 @@ class AutoPage(ABC):
         self.get_this().wait_condition(condition=Conditions.wait_dom_ready, timeout=timeout)
         return navigate_result
 
-    def navigate(self, url):
+    def navigate(self, url, referrer=None, transition_type=None, frame_id=None):
         if url is None or url.strip() == '':
-            raise ValueError('url is empty')
+            raise ValueError('url is empty!')
         that = self.get_this()
-        return that.chrome.Page.navigate(url=url)
+        return that.chrome.Page.navigate(url=url, referrer=referrer, transitionType=transition_type, frameId=frame_id)
 
-    def navigate(self, url, referrer, transition_type, frame_id):
-        pass
+    def add_script_to_evaluate_on_new_document(self, source):
+        if source is None or source.strip() == '':
+            raise ValueError('source is empty!')
+        that = self.get_this()
+        return that.chrome.Page.addScriptToEvaluateOnNewDocument(source=source)
 
     @abstractmethod
     def get_this(self):
@@ -53,5 +56,7 @@ if __name__ == '__main__':
     else:
         launcher = Launcher.Launcher(path='C:/app/chrome-win/chrome.exe')
     auto_chrome = launcher.launch()
-    result = auto_chrome.navigate_until_dom_ready(url='https://persons.shgjj.com', timeout=5)
+    script_identifier = auto_chrome.add_script_to_evaluate_on_new_document('alert(1)')
+    print(script_identifier)
+    result = auto_chrome.navigate_until_dom_ready(url='https://www.baidu.com', timeout=5)
     print(result)
