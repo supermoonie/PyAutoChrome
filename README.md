@@ -70,7 +70,7 @@ AutoChrome for Python
     - handle_java_script_dialog(accept, prompt_text)
     - [x] {frameId, loaderId, errorText} navigate(url, referrer, transition_type, frame_id)
     - [x] back()
-    - forward()
+    - [x] forward()
     - reload(ignore_cache, script_to_evaluate_on_load)
     - stop_loading()
     - set_content(html)

@@ -4,6 +4,7 @@ from enum import Enum, unique
 
 import Conditions
 import Launcher
+import time
 
 
 @unique
@@ -49,6 +50,16 @@ class AutoPage(ABC):
         if entry is not None:
             that.chrome.Page.navigateToHistoryEntry(entryId=entry['id'])
 
+    def forward(self):
+        that = self.get_this()
+        navigation_history = that.chrome.Page.getNavigationHistory()
+        index = navigation_history['currentIndex'] + 1
+        if index >= len(navigation_history['entries']):
+            return
+        entry = navigation_history['entries'][index]
+        if entry is not None:
+            that.chrome.Page.navigateToHistoryEntry(entryId=entry['id'])
+
     def add_script_to_evaluate_on_new_document(self, source):
         if source is None or source.strip() == '':
             raise ValueError('source is empty!')
@@ -73,3 +84,5 @@ if __name__ == '__main__':
     # history = auto_chrome.chrome.Page.getNavigationHistory()
     # print(history)
     auto_chrome.back()
+    time.sleep(2)
+    auto_chrome.forward()
