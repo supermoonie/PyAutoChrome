@@ -71,11 +71,11 @@ AutoChrome for Python
     - [x] {frameId, loaderId, errorText} navigate(url, referrer, transition_type, frame_id)
     - [x] back()
     - [x] forward()
-    - reload(ignore_cache, script_to_evaluate_on_load)
-    - stop_loading()
+    - [x] reload(ignore_cache, script_to_evaluate_on_load)
+    - [x] stop_loading()
     - set_content(html)
     - set_download_behavior(down_load_behavior_type, download_path)
-    - str get_frame_id(url)
+    - [x] str get_frame_id(url)
 
 - AutoRuntime
     - bool eval_until_dialog_or_check_ok(expression, expect_true_exp, timeout)
