@@ -1,6 +1,7 @@
 import platform
 from abc import ABC, abstractmethod
 from enum import Enum, unique
+from collections import deque
 
 import Conditions
 import Launcher
@@ -60,6 +61,27 @@ class AutoPage(ABC):
         if entry is not None:
             that.chrome.Page.navigateToHistoryEntry(entryId=entry['id'])
 
+    def reload(self, ignore_cache=False, script_to_evaluate_on_load=None):
+        self.get_this().chrome.Page.reload(ignoreCache=ignore_cache, scriptToEvaluateOnLoad=script_to_evaluate_on_load)
+
+    def stop_loading(self):
+        self.get_this().chrome.Page.stopLoading()
+
+    def get_frame_id(self, url):
+        if url is None or url.strip() == '':
+            raise ValueError('url is empty!')
+        that = self.get_this()
+        frame_resource_tree = that.chrome.Page.getResourceTree()['frameTree']
+        trees = deque()
+        trees.append(frame_resource_tree)
+        while trees:
+            tree = trees.pop()
+            if url == tree['frame']['url']:
+                return tree['frame']['id']
+            if 'childFrames' in tree and tree['childFrames'] is not None and len(tree['childFrames']) > 0:
+                for child_frame in tree['childFrames']:
+                    trees.append(child_frame)
+
     def add_script_to_evaluate_on_new_document(self, source):
         if source is None or source.strip() == '':
             raise ValueError('source is empty!')
@@ -86,3 +108,9 @@ if __name__ == '__main__':
     auto_chrome.back()
     time.sleep(2)
     auto_chrome.forward()
+    time.sleep(2)
+    auto_chrome.reload(ignore_cache=True)
+    time.sleep(2)
+    auto_chrome.navigate(url='http://httpbin.org/#/Status_codes/get_status__codes_')
+    time.sleep(2)
+    auto_chrome.stop_loading()

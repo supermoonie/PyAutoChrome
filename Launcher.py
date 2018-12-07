@@ -1,3 +1,4 @@
+import platform
 import subprocess
 import tempfile
 import os
@@ -20,9 +21,13 @@ DEFAULT_ARGS = ('--disable-translate', '--disable-extensions', '--disable-backgr
 
 class Launcher:
 
-    def __init__(self, path, user_data_dir=None, port=9222, open_dev_tools=False, incognito=False, headless=False):
+    def __init__(self, path=None, user_data_dir=None, port=9222, open_dev_tools=False, incognito=False, headless=False):
         if path is None or path.strip() == '':
-            raise ValueError('path is empty')
+            # raise ValueError('path is empty')
+            if 'Darwin' == platform.system():
+                    path = '/Users/wangchao/.cdp4j/chromium-605198/Chromium.app/Contents/MacOS/Chromium'
+            else:
+                path = 'C:/app/chrome-win/chrome.exe'
         self.path = path
         if user_data_dir is None or user_data_dir.strip() == '':
             self.user_data_dir = tempfile.gettempdir() + os.path.sep + 'py_auto_chrome'
