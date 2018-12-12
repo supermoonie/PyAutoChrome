@@ -67,6 +67,16 @@ class AutoPage(ABC):
     def stop_loading(self):
         self.get_this().chrome.Page.stopLoading()
 
+    def set_content(self, html):
+        if html is None or html.strip() == '':
+            raise ValueError('html is empty!')
+        that = self.get_this()
+        target_id = that.target_id
+        target_info = that.chrome.Target.getTargetInfo(targetId=target_id)
+        current_url = target_info['targetInfo']['url']
+        frame_id = self.get_frame_id(current_url)
+        that.chrome.Page.setDocumentContent(frameId=frame_id, html=html)
+
     def get_frame_id(self, url):
         if url is None or url.strip() == '':
             raise ValueError('url is empty!')
