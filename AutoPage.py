@@ -1,11 +1,8 @@
-import platform
 from abc import ABC, abstractmethod
-from enum import Enum, unique
 from collections import deque
+from enum import Enum, unique
 
 import Conditions
-import Launcher
-import time
 
 
 @unique
@@ -23,6 +20,16 @@ class TransitionType(Enum):
     keyword = 'keyword',
     keyword_generated = 'keyword_generated',
     other = 'other'
+
+    def __str__(self):
+        return '%s' % self._value_
+
+
+@unique
+class Behavior(Enum):
+    deny = 'deny',
+    allow = 'allow',
+    default = 'default'
 
     def __str__(self):
         return '%s' % self._value_
@@ -77,6 +84,10 @@ class AutoPage(ABC):
         frame_id = self.get_frame_id(current_url)
         that.chrome.Page.setDocumentContent(frameId=frame_id, html=html)
 
+    def set_download_behavior(self, behavior=Behavior.default, download_path=None):
+        that = self.get_this()
+        that.chrome.Page.setDownloadBehavior(behavior=behavior, downloadPath=download_path)
+
     def get_frame_id(self, url):
         if url is None or url.strip() == '':
             raise ValueError('url is empty!')
@@ -101,26 +112,3 @@ class AutoPage(ABC):
     @abstractmethod
     def get_this(self):
         pass
-
-
-if __name__ == '__main__':
-    if 'Darwin' == platform.system():
-        launcher = Launcher.Launcher(path='/Users/wangchao/.cdp4j/chromium-605198/Chromium.app/Contents/MacOS/Chromium')
-    else:
-        launcher = Launcher.Launcher(path='C:/app/chrome-win/chrome.exe')
-    auto_chrome = launcher.launch()
-    # script_identifier = auto_chrome.add_script_to_evaluate_on_new_document('alert(1)')
-    # print(script_identifier)
-    result = auto_chrome.navigate_until_dom_ready(url='https://www.baidu.com', timeout=5)
-    print(result)
-    # history = auto_chrome.chrome.Page.getNavigationHistory()
-    # print(history)
-    auto_chrome.back()
-    time.sleep(2)
-    auto_chrome.forward()
-    time.sleep(2)
-    auto_chrome.reload(ignore_cache=True)
-    time.sleep(2)
-    auto_chrome.navigate(url='http://httpbin.org/#/Status_codes/get_status__codes_')
-    time.sleep(2)
-    auto_chrome.stop_loading()

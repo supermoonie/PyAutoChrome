@@ -42,6 +42,9 @@ class TestAutoPage(TestCase):
         self.auto_chrome.navigate_until_dom_ready(url='https://persons.shgjj.com', timeout=5)
         self.auto_chrome.set_content('<h1>Hello AutoChrome!<h1>')
 
+    def test_set_download_behavior(self):
+        self.auto_chrome.navigate_until_dom_ready(url='https://persons.shgjj.com', timeout=5)
+
     def test_get_frame_id(self):
         self.auto_chrome.navigate_until_dom_ready(url='https://persons.shgjj.com', timeout=5)
         frame_id = self.auto_chrome.get_frame_id(url='https://persons.shgjj.com/')
