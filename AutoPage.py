@@ -3,6 +3,7 @@ from collections import deque
 from enum import Enum, unique
 
 import Conditions
+import json
 
 
 @unique
@@ -112,3 +113,9 @@ class AutoPage(ABC):
     @abstractmethod
     def get_this(self):
         pass
+
+
+if __name__ == '__main__':
+    print(Behavior.deny)
+    test_json = {'behavior': Behavior.deny}
+    print(json.dumps(test_json))
