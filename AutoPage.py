@@ -3,7 +3,6 @@ from collections import deque
 from enum import Enum, unique
 
 import Conditions
-import json
 
 
 @unique
