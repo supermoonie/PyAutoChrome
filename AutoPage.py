@@ -87,7 +87,7 @@ class AutoPage(ABC):
 
     def set_download_behavior(self, behavior=Behavior.default, download_path=None):
         that = self.get_this()
-        that.chrome.Page.setDownloadBehavior(behavior=behavior, downloadPath=download_path)
+        that.chrome.Page.setDownloadBehavior(behavior=behavior.value[0], downloadPath=download_path)
 
     def get_frame_id(self, url):
         if url is None or url.strip() == '':
@@ -113,9 +113,3 @@ class AutoPage(ABC):
     @abstractmethod
     def get_this(self):
         pass
-
-
-if __name__ == '__main__':
-    print(Behavior.deny)
-    test_json = {'behavior': Behavior.deny}
-    print(json.dumps(test_json))
