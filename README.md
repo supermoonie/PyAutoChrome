@@ -74,7 +74,7 @@ AutoChrome for Python
     - [x] reload(ignore_cache, script_to_evaluate_on_load)
     - [x] stop_loading()
     - [x] set_content(html)
-    - set_download_behavior(down_load_behavior_type, download_path)
+    - [x] set_download_behavior(down_load_behavior_type, download_path)
     - [x] str get_frame_id(url)
 
 - AutoRuntime
