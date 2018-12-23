@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from collections import deque
 from enum import Enum, unique
+import Event
 
 import Conditions
 
@@ -40,6 +41,11 @@ class AutoPage(ABC):
     def navigate_until_dom_ready(self, url, timeout):
         navigate_result = self.navigate(url=url)
         self.get_this().wait_condition(condition=Conditions.wait_dom_ready, timeout=timeout)
+        return navigate_result
+
+    def navigate_until_dialog_opening(self, url, timeout):
+        navigate_result = self.navigate(url=url)
+        self.get_this().wait_event(event=Event.Events.PageJavascriptDialogOpening, timeout=timeout)
         return navigate_result
 
     def navigate(self, url, referrer=None, transition_type=None, frame_id=None):

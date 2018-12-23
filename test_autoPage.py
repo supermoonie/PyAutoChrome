@@ -9,14 +9,20 @@ import Tools
 class TestAutoPage(TestCase):
 
     def setUp(self):
-        launcher = Launcher(open_dev_tools=True)
+        launcher = Launcher(open_dev_tools=False)
         self.auto_chrome = launcher.launch()
 
     def test_navigate_until_dom_ready(self):
         self.auto_chrome.navigate_until_dom_ready(url='https://persons.shgjj.com', timeout=5)
 
+    def test_navigate_until_dialog_opening(self):
+        navigate_result = self.auto_chrome.navigate_until_dialog_opening(url='https://gzgjj.gov.cn/wsywgr/', timeout=5)
+        print(navigate_result)
+        Tools.show_info('close')
+
     def test_navigate(self):
-        self.auto_chrome.navigate(url='https://persons.shgjj.com', referrer='https://persons.shgjj.com')
+        result = self.auto_chrome.navigate(url='https://persons.shgjj.com', referrer='https://persons.shgjj.com')
+        print(result)
 
     def test_back(self):
         self.auto_chrome.navigate_until_dom_ready(url='https://www.baidu.com', timeout=5)
