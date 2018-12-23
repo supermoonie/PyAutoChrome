@@ -37,7 +37,7 @@ AutoChrome for Python
 
 - AutoNavigate
     - [x] {} navigate_until_dom_ready(url, timeout)
-    - {} navigate_until_dialog_open(url, timeout)
+    - [x] {} navigate_until_dialog_open(url, timeout)
     - {} navigate_until_first_meaning_full_paint(url, timeout)
     - {} navigate_until_lifecycle_event(url, lifecycle_event, timeout)
     - {} navigate_until(url, event, timeout, ref)

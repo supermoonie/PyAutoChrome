@@ -16,7 +16,8 @@ class TestAutoPage(TestCase):
         self.auto_chrome.navigate_until_dom_ready(url='https://persons.shgjj.com', timeout=5)
 
     def test_navigate_until_dialog_opening(self):
-        navigate_result = self.auto_chrome.navigate_until_dialog_opening(url='https://gzgjj.gov.cn/wsywgr/', timeout=5)
+        url = 'https://gzgjj.gov.cn/wsywgr/'
+        navigate_result = self.auto_chrome.navigate_until_dialog_opening(url=url, timeout=5)
         print(navigate_result)
         Tools.show_info('close')
 

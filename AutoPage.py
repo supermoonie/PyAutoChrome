@@ -45,8 +45,9 @@ class AutoPage(ABC):
 
     def navigate_until_dialog_opening(self, url, timeout):
         navigate_result = self.navigate(url=url)
-        self.get_this().wait_event(event=Event.Events.PageJavascriptDialogOpening, timeout=timeout)
-        return navigate_result
+        dialog_result = self.get_this().wait_event(event=Event.Events.PageJavascriptDialogOpening, timeout=timeout)
+        dialog = dialog_result[0]
+        return navigate_result, dialog
 
     def navigate(self, url, referrer=None, transition_type=None, frame_id=None):
         if url is None or url.strip() == '':

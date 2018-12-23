@@ -113,7 +113,7 @@ class ChromeInterface(object):
                     break
             except:
                 break
-        return (matching_message, messages)
+        return matching_message, messages
 
     # Blocking
     def wait_result(self, result_id, timeout=None):
@@ -135,7 +135,7 @@ class ChromeInterface(object):
                     break
             except:
                 break
-        return (matching_result, messages)
+        return matching_result, messages
 
     # Non Blocking
     def pop_messages(self):
