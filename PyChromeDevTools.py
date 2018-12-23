@@ -28,7 +28,7 @@ class GenericElement(object):
                     params[key] = args[key]
             call_obj = {'id': message_id, 'method': func_name, 'params': params}
             data = json.dumps(call_obj)
-            print('>>> ' + data)
+            print('>>> send: ' + data)
             self.parent.ws.send(data)
             result, _ = self.parent.wait_result(message_id)
             if result is not None:
@@ -105,7 +105,7 @@ class ChromeInterface(object):
                 break
             try:
                 message = self.ws.recv()
-                print('<<< result: ' + message)
+                print('<<< event: ' + message)
                 parsed_message = json.loads(message)
                 messages.append(parsed_message)
                 if 'method' in parsed_message and parsed_message['method'] == event:
@@ -127,7 +127,7 @@ class ChromeInterface(object):
                 break
             try:
                 message = self.ws.recv()
-                print('<<< ' + message)
+                print('<<< receive: ' + message)
                 parsed_message = json.loads(message)
                 messages.append(parsed_message)
                 if ('result' in parsed_message or 'error' in parsed_message) and parsed_message['id'] == result_id:

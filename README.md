@@ -67,7 +67,7 @@ AutoChrome for Python
     - str capture_full_screen_shot()
     - str capture_snapshot()
     - str get_content(url)
-    - handle_java_script_dialog(accept, prompt_text)
+    - [x] handle_java_script_dialog(accept, prompt_text)
     - [x] {frameId, loaderId, errorText} navigate(url, referrer, transition_type, frame_id)
     - [x] back()
     - [x] forward()

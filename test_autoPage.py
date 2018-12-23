@@ -21,6 +21,13 @@ class TestAutoPage(TestCase):
         print(navigate_result)
         Tools.show_info('close')
 
+    def test_handle_java_script_dialog(self):
+        url = 'https://gzgjj.gov.cn/wsywgr/'
+        navigate_result = self.auto_chrome.navigate_until_dialog_opening(url=url, timeout=5)
+        print(navigate_result)
+        self.auto_chrome.handle_java_script_dialog(accept=True)
+        Tools.show_info('close')
+
     def test_navigate(self):
         result = self.auto_chrome.navigate(url='https://persons.shgjj.com', referrer='https://persons.shgjj.com')
         print(result)

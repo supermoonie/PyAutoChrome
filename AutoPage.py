@@ -116,6 +116,10 @@ class AutoPage(ABC):
         that = self.get_this()
         return that.chrome.Page.addScriptToEvaluateOnNewDocument(source=source)
 
+    def handle_java_script_dialog(self, accept=True, prompt_text=None):
+        that = self.get_this()
+        that.chrome.Page.handleJavaScriptDialog(accept=accept, promptText=prompt_text)
+
     @abstractmethod
     def get_this(self):
         pass
