@@ -71,3 +71,8 @@ class TestAutoPage(TestCase):
     def test_add_script_to_evaluate_on_new_document(self):
         self.auto_chrome.add_script_to_evaluate_on_new_document('alert(1);')
         self.auto_chrome.navigate_until_dom_ready(url='https://www.baidu.com', timeout=5)
+
+    def test_get_content(self):
+        self.auto_chrome.navigate_until_dom_ready(url='http://httpbin.org/get', timeout=5)
+        result = self.auto_chrome.get_content('http://httpbin.org/get')
+        print(result['content'])

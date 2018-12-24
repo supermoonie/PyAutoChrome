@@ -109,6 +109,7 @@ class AutoPage(ABC):
             if 'childFrames' in tree and tree['childFrames'] is not None and len(tree['childFrames']) > 0:
                 for child_frame in tree['childFrames']:
                     trees.append(child_frame)
+        return None
 
     def add_script_to_evaluate_on_new_document(self, source):
         if source is None or source.strip() == '':
@@ -119,6 +120,13 @@ class AutoPage(ABC):
     def handle_java_script_dialog(self, accept=True, prompt_text=None):
         that = self.get_this()
         that.chrome.Page.handleJavaScriptDialog(accept=accept, promptText=prompt_text)
+
+    def get_content(self, url):
+        if url is None or url.strip == '':
+            return None
+        frame_id = self.get_frame_id(url=url)
+        that = self.get_this()
+        return that.chrome.Page.getResourceContent(frameId=frame_id, url=url)
 
     @abstractmethod
     def get_this(self):
