@@ -5,11 +5,12 @@ import Event
 import Launcher
 import PyChromeDevTools
 from AutoPage import AutoPage
+from AutoWindow import AutoWindow
 
 MIN_TIMEOUT = 0.15
 
 
-class AutoChrome(AutoPage):
+class AutoChrome(AutoPage, AutoWindow):
     def __init__(self, port=9222, chrome_process=None):
         self.port = port
         self.chrome_process = chrome_process
@@ -96,11 +97,14 @@ class AutoChrome(AutoPage):
 
 if __name__ == '__main__':
     if 'Darwin' == platform.system():
-        launcher = Launcher.Launcher(path='/Users/wangchao/.cdp4j/chromium-605198/Chromium.app/Contents/MacOS/Chromium')
+        launcher = Launcher.Launcher(path='/Users/kba977/Others/SoftWare/chrome-mac/Chromium.app/Contents/MacOS/Chromium')
     else:
         launcher = Launcher.Launcher(path='C:/app/chrome-win/chrome.exe')
     auto_chrome = launcher.launch()
-    auto_chrome.chrome.Page.navigate(url='https://persons.shgjj.com')
+    auto_chrome.navigate(url='https://persons.shgjj.com')
+    auto_chrome.get_window_bounds()
+    auto_chrome.set_window_bounds(100, 100, 800, 600)
+    auto_chrome.set_window_state('minimized')
     # auto_chrome.wait_condition(condition=Conditions.wait_dom_ready, timeout=18)
     # result = auto_chrome.wait_event(event=Event.Events.PageFrameStoppedLoading, timeout=10)
-    auto_chrome.wait_lifecycle_event(event=Event.LifecycleEvents.firstMeaningfulPaint, timeout=15)
+    # auto_chrome.wait_lifecycle_event(event=Event.LifecycleEvents.firstMeaningfulPaint, timeout=15)
