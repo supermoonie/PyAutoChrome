@@ -91,7 +91,7 @@ AutoChrome for Python
     - bounds get_window_bounds()
     - set_window_bounds(bounds)
     - set_window_bounds(left, top, width, height)
-    - set_window_state(window_state)
+    - set_window_state(window_state)    
       `window_state`: The state of the browser window.
         - `normal` (default)
         - `minimized`
