@@ -12,9 +12,10 @@ class AutoWindow(ABC):
         window_id = self.get_current_window_id()
         return that.chrome.Browser.getWindowBounds(windowId=window_id)
 
-    def set_window_bounds(self, left=0, top=0, width=1200, height=800, windowState='normal'):
+    def set_window_bounds(self, left=0, top=0, width=1200, height=800):
         params = locals()
         params.pop('self')
+        params.update({'windowState': 'normal'})
         that = self.get_this()
         window_id = self.get_current_window_id()
         return that.chrome.Browser.setWindowBounds(windowId=window_id, bounds=params)
